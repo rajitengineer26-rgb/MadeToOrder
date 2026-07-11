@@ -1,0 +1,51 @@
+type DashboardStats {
+    totalKitchens: Int!
+    liveKitchens: Int!
+    pendingApprovals: Int!
+    totalOrdersToday: Int!
+    totalRevenueToday: Float!
+    pendingPayouts: Int!
+    totalCustomers: Int!
+    averageOrderValue: Float
+}
+
+type RevenueReport {
+    period: String!
+    totalRevenue: Float!
+    platformFees: Float!
+    kitchenPayouts: Float!
+    orderCount: Int!
+    dailyBreakdown: [DailyRevenue]
+}
+
+type DailyRevenue {
+    date: String!
+    revenue: Float!
+    orders: Int!
+}
+
+type PayoutSummary {
+    payoutId: ID!
+    kitchenName: String!
+    weekStartDate: String
+    weekEndDate: String
+    totalOrders: Int!
+    netPayout: Float!
+    status: String!
+}
+
+type KitchenPerformance {
+    kitchenId: ID!
+    totalOrders: Int!
+    totalRevenue: Float!
+    averageRating: Float
+    customerRetention: Float
+    topDishes: [DishPerformance]
+}
+
+type DishPerformance {
+    menuItemId: ID!
+    name: String!
+    totalOrdered: Int!
+    revenue: Float!
+}

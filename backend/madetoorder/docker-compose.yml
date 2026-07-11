@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+
+  mongo:
+    image: mongo:7
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: .
+    container_name: mto-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    environment:
+      SPRING_MONGODB_URI: mongodb://mongo:27017/madetoorder
+
+volumes:
+  mongo-data:

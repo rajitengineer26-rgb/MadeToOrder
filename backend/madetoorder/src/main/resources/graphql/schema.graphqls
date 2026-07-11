@@ -1,0 +1,29 @@
+type Query {
+    kitchens(
+        filter: KitchenFilter,
+        search: String,
+        pagination: PaginationInput
+    ): [Kitchen!]!
+    menuItems(kitchenId: ID!): [MenuItem]
+    menuItem(id: ID!): MenuItem
+    menuCategories(kitchenId: ID!): [String]
+    orders(status: OrderStatus, page: Int, limit: Int): OrderConnection
+    order(id: ID!): Order
+    customerOrders(customerId: ID!, status: OrderStatus): [Order]
+    kitchenOrders(kitchenId: ID!, status: OrderStatus): [Order]
+    dashboardStats: DashboardStats
+    revenueReport(period: String!, dateFrom: String, dateTo: String): RevenueReport
+    pendingPayouts: [PayoutSummary]
+    kitchenPerformance(kitchenId: ID!): KitchenPerformance
+    searchKitchens(query: String!): [Kitchen]
+}
+
+type Mutation {
+    toggleMenuItemAvailability(id: ID!, isAvailable: Boolean!): MenuItem
+    markOutOfStock(id: ID!, reason: String): MenuItem
+    restockItem(id: ID!): MenuItem
+    createOrder(input: CreateOrderInput!): Order
+    updateOrderStatus(id: ID!, status: OrderStatus!): Order
+    cancelOrder(id: ID!, reason: String): Order
+}
+

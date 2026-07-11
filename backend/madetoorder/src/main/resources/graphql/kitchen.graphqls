@@ -1,0 +1,127 @@
+type Kitchen {
+    id: ID
+    name: String
+    slug: String
+    description: String
+    type: KitchenType
+    area: String
+    city: String
+    state: String
+    pincode: String
+    rating: Float
+    isOpen: Boolean
+    isTakingOrders: Boolean
+    imageUrl: String!
+    menuCategories: [String]!
+    menuItems(filter: MenuFilter): [MenuItem]!
+    reviews(pagination: PaginationInput): ReviewConnection!
+    deliveryTimeSlots: [TimeSlot]!
+    distanceKm: Float!
+}
+
+type MenuItem {
+    id: ID
+    kitchenId: ID
+    category: String
+    name: String
+    slug: String
+    description: String
+    price: Float
+    currency: String
+    preparationTime: Int
+    ingredients: [Ingredient]
+    cuisineType: String
+    dietaryTags: [String]
+    imageUrl: String
+    isAvailable: Boolean
+    isOutOfStock: Boolean
+    maxOrderQuantity: Int
+    type:String
+}
+
+type Ingredient {
+    name: String
+    isAllergen: Boolean
+    allergenType: String
+}
+
+type Review {
+    id: ID
+    orderId: ID
+    customerId: ID
+    customerName: String
+    kitchenId: ID
+    rating: Int
+    description: String
+    isVisible: Boolean
+    createdAt: String
+}
+
+type TimeSlot {
+    type: TimeSlotType
+    dayOfWeek: String
+    startTime: String
+    endTime: String
+    maxOrders: Int
+    isActive: Boolean
+}
+
+type KitchenConnection {
+    edges: [KitchenEdge]
+    pageInfo: PageInfo
+    totalCount: Int
+}
+
+type KitchenEdge {
+    node: Kitchen
+    cursor: String
+}
+
+type ReviewConnection {
+    edges: [ReviewEdge]
+    pageInfo: PageInfo
+    totalCount: Int
+}
+
+type ReviewEdge {
+    node: Review
+    cursor: String
+}
+
+type PageInfo {
+    hasNextPage: Boolean
+    endCursor: String
+    startCursor: String
+}
+
+enum KitchenType {
+    VEGETARIAN
+    NON_VEGETARIAN
+}
+
+enum TimeSlotType {
+    ORDER_TAKING
+    DELIVERY
+}
+
+input KitchenFilter {
+    type: KitchenType
+    area: String
+    cuisine: String
+    search: String
+    isOpen: Boolean
+    minRating: Float
+    maxDistance: Float
+}
+
+input MenuFilter {
+    category: String
+    availableOnly: Boolean
+    cuisineType: String
+    maxPrice: Float
+}
+
+input PaginationInput {
+    page: Int = 20
+    size: Int
+}

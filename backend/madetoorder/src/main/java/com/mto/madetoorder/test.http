@@ -1,0 +1,24 @@
+### Send OTP
+POST http://localhost:8080/api/v1/auth/otp/send
+Content-Type: application/json
+
+{
+  "phoneNumber": "+919876543210",
+  "purpose": "LOGIN"
+}
+
+### Verify OTP
+POST http://localhost:8080/api/v1/auth/otp/verify
+Content-Type: application/json
+
+{
+  "phoneNumber": "+919876543210",
+  "otp": "966918"
+}
+
+####### Verify Kafka
+POST http://localhost:8080/test/kafka
+Content-Type: application/json
+
+########################
+GET http://localhost:8080/test/user/6a47ba2f4a45b9591763f883

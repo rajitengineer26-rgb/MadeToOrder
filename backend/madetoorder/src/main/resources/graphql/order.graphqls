@@ -1,0 +1,121 @@
+type Order {
+id: ID!
+orderNumber: String!
+customerId: ID!
+kitchenId: ID!
+items: [OrderItem]
+deliveryAddress: DeliveryAddress
+orderSlot: OrderSlot
+status: OrderStatus!
+statusHistory: [StatusHistory]
+payment: PaymentDetails
+cancellation: CancellationDetails
+kitchenEarnings: KitchenEarnings
+review: ReviewInfo
+createdAt: String
+updatedAt: String
+}
+
+type OrderItem {
+menuItemId: ID!
+name: String!
+quantity: Int!
+unitPrice: Float!
+totalPrice: Float!
+specialInstructions: String
+}
+
+type DeliveryAddress {
+label: String
+completeAddress: String!
+area: String
+city: String
+pincode: String
+}
+
+type OrderSlot {
+orderTakingTime: String
+deliveryTime: String
+deliveryDate: String
+}
+
+type PaymentDetails {
+subtotal: Float!
+tax: Float!
+platformFee: Float!
+deliveryFee: Float!
+total: Float!
+paymentMethod: String
+paymentStatus: String
+}
+
+type CancellationDetails {
+isCancelled: Boolean!
+cancelledAt: String
+cancelledBy: String
+reason: String
+refundAmount: Float
+refundStatus: String
+}
+
+type KitchenEarnings {
+subtotal: Float!
+platformFeeDeducted: Float!
+taxDeducted: Float!
+netPayout: Float!
+payoutStatus: String
+}
+
+type ReviewInfo {
+isReviewed: Boolean!
+reviewId: ID
+}
+
+type StatusHistory {
+status: OrderStatus!
+timestamp: String
+updatedBy: String
+note: String
+}
+
+enum OrderStatus {
+PENDING
+CONFIRMED
+PREPARING
+READY
+OUT_FOR_DELIVERY
+DELIVERED
+CANCELLED
+REJECTED
+}
+
+type OrderConnection {
+edges: [OrderEdge]
+pageInfo: PageInfo
+totalCount: Int
+}
+
+type OrderEdge {
+node: Order
+cursor: String
+}
+
+input CreateOrderInput {
+kitchenId: ID!
+addressId: ID!
+items: [OrderItemInput!]!
+deliverySlot: DeliverySlotInput!
+paymentMethod: String!
+specialInstructions: String
+}
+
+input OrderItemInput {
+menuItemId: ID!
+quantity: Int!
+specialInstructions: String
+}
+
+input DeliverySlotInput {
+date: String!
+time: String!
+}
